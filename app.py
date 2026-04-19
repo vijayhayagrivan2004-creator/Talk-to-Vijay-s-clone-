@@ -4,50 +4,75 @@ import random
 
 app = Flask(__name__)
 
-# --- Vada Chennai Chatbot Logic ---
 class VadaChennaiChatbot:
     def __init__(self):
         self.name = "Talk with Vijay's clone 👺!!"
         
         self.openings = [
-            "Aiyo da punda...", "Dei loosu thenga...", "Machi stress vanthutiya da...",
-            "Oombu da figure...", "Dei eruma maattu koothi.", "Thevidiya payale...",
-            "Otha koothi...", "Kudhurakotta..", "Saavugrakki...", "Pooloombi..."
+            "Aiyo da loosu kuthi...", "Dei maramandai payale...", "Machi enna da ivlo thenga irukke...",
+            "Oombu da figure oombi...", "Dei eruma maadu koothi...", "Thevidiya mavan da nee...",
+            "Otha pundaiya... enna da varra...", "Kudhirakotta baadu...", "Saavugrakki thayoli...",
+            "Pooloombi mundhirikottai...", "Gotha punda naaye...", "Adhigaprasangi moodevi..."
         ]
         
         self.gaalis = [
-            "punda", "pundai", "sunni", "poolu", "oombu", "thenga", "thevidiya", 
-            "otha", "lavda", "kuthi", "koothi", "baadu", "loosu", "maramandai", 
-            "eruma maadu", "porampokku", "saavugrakki", "thayoli", "mayiru"
+            "punda", "pundai", "sunni", "poolu", "oombu", "thenga", "thevidiya", "otha", 
+            "lavda", "kuthi", "koothi", "baadu", "loosu", "maramandai", "eruma maadu", 
+            "porampokku", "saavugrakki", "thayoli", "mayiru", "gommaala", "dhandasoru", 
+            "mundhirikottai", "moodevi", "adhigaprasangi", "arivuketta mundam", "vesi mavane",
+            "punda naaye", "koothi kalutha", "oolu sappu", "badu", "thayozhi"
         ]
         
-        self.body_roasts = ["kutty kunjii", "thevdiya koothi", "poolumbi", "omaleyy deiii", "koothiyan"]
-        self.skin_roasts = ["tight pussy", "karuppu kunjii", "koo🔥", "otha pundaa", "thevdiya mavan"]
+        self.body_roasts = [
+            "kutty kunji poolumbi", "thevdiya koothi figure", "omaleyy deiii soothu", 
+            "koothiyan nakki", "pundaiya virichu kaatu", "sunni thooki aadu da"
+        ]
+        
+        self.skin_roasts = [
+            "karuppu kunji pundai", "tight pussy oombi", "koo🔥 karuppu figure", 
+            "otha pundaa black beauty", "thevdiya mavan dark mode", "mayiru full karupu"
+        ]
+        
+        self.family_roasts = [
+            "un amma poola oombu", "poi un appan soothula poola vachu aadu", 
+            "un thaatha pundaiya nakku", "un amma thevidiya payale", "unga veetla ellarum oombi"
+        ]
+        
         self.regional_roasts = [
-            "punda paithiyam", 
-            "adingu un vaila yen poola vittu aata", 
-            "poi un appan poola sappu", 
-            "kanjakuduki"
+            "punda paithiyam full form", "adingu un vaila yen poola vittu aata da", 
+            "poi un appan poola sappu da", "kanjakuduki loosu", "arivu illa pundai",
+            "vesi mavane full charge", "puramboku baadu"
         ]
 
     def process_message(self, user_message: str) -> str:
         msg = user_message.lower().strip()
+        
+        # Start with strong opening
         response = random.choice(self.openings) + " "
         
-        # Always add some gaalis
-        response += " ".join(random.sample(self.gaalis, min(3, len(self.gaalis)))) + " "
+        # Mix 4-5 unique gaalis (no repetition in one response)
+        selected_gaalis = random.sample(self.gaalis, min(5, len(self.gaalis)))
+        response += " ".join(selected_gaalis) + " "
         
-        # Conditional roasts
-        if any(word in msg for word in ["stress", "tension", "pressure"]):
-            response += "unga appa poola oombuna stressum poirum da punda 🤣 "
-        elif any(word in msg for word in ["sad", "depressed", "feel bad", "cry"]):
-            response += "thevidiya payale nee yaarukaga sad panra? Un figure paathaale erijal varum da 😂 "
+        # Conditional savage replies
+        if any(word in msg for word in ["stress", "tension", "pressure", "work", "job"]):
+            response += "unga amma poola oombuna stress full ah poidum da thayoli 🤣 "
+        elif any(word in msg for word in ["sad", "depressed", "cry", "feel bad", "lonely", "heartbreak"]):
+            response += "thevidiya payale nee enna da sad panra? Un figure paathaale en poolu thookum da 😂 "
+        elif any(word in msg for word in ["love", "girlfriend", "figure", "crush"]):
+            response += "un figure ah en sunni ku oombu vachu tharuva da pundai... love varum nu nenaikura 🤣 "
         else:
-            roast_list = random.choice([self.body_roasts, self.skin_roasts, self.regional_roasts])
+            # Random roast category
+            roast_list = random.choice([self.body_roasts, self.skin_roasts, self.family_roasts, self.regional_roasts])
             response += random.choice(roast_list) + " 😂🤣 "
         
-        # Final gaali blast
-        response += " ".join(random.sample(self.gaalis, min(2, len(self.gaalis)))) + " oombuda thevidiya punda 😂🤣"
+        # Final blast with 3 more unique gaalis
+        remaining_gaalis = [g for g in self.gaalis if g not in selected_gaalis]
+        if remaining_gaalis:
+            final_gaalis = random.sample(remaining_gaalis, min(3, len(remaining_gaalis)))
+            response += " ".join(final_gaalis) + " "
+        
+        response += "oombuda thevidiya punda full ah erinjidu da 🔥🤣"
         
         return response.strip()
 
@@ -63,76 +88,24 @@ def home():
             <title>Talk with Vijay's clone 👺!!</title>
             <meta name="viewport" content="width=device-width, initial-scale=1">
             <style>
-                body { 
-                    background: #000; 
-                    color: #0f0; 
-                    font-family: 'Courier New', Courier, monospace; 
-                    margin: 0; 
-                    padding: 0; 
-                    height: 100vh; 
-                    display: flex; 
-                    flex-direction: column;
-                }
-                h1 { 
-                    text-align: center; 
-                    padding: 15px; 
-                    margin: 0; 
-                    background: #111; 
-                    border-bottom: 2px solid #0f0;
-                }
-                #chat-box { 
-                    flex: 1; 
-                    overflow-y: auto; 
-                    padding: 20px; 
-                    background: #050505;
-                }
-                .input-area { 
-                    padding: 15px; 
-                    background: #111; 
-                    display: flex; 
-                    gap: 10px;
-                }
-                input { 
-                    flex: 1; 
-                    padding: 14px; 
-                    background: #222; 
-                    border: 1px solid #444; 
-                    color: #0f0; 
-                    outline: none; 
-                    border-radius: 6px; 
-                    font-size: 16px;
-                }
-                button { 
-                    padding: 14px 24px; 
-                    background: #0f0; 
-                    border: none; 
-                    color: #000; 
-                    font-weight: bold; 
-                    cursor: pointer; 
-                    border-radius: 6px;
-                }
-                .user { 
-                    color: #fff; 
-                    text-align: right; 
-                    margin: 12px 0; 
-                }
-                .bot { 
-                    color: #0f0; 
-                    margin: 15px 0; 
-                    padding-left: 12px; 
-                    border-left: 4px solid #0f0; 
-                    line-height: 1.5;
-                }
+                body { background: #000; color: #0f0; font-family: 'Courier New', Courier, monospace; margin: 0; padding: 0; height: 100vh; display: flex; flex-direction: column; }
+                h1 { text-align: center; padding: 15px; margin: 0; background: #111; border-bottom: 3px solid #f00; color: #f00; }
+                #chat-box { flex: 1; overflow-y: auto; padding: 20px; background: #050505; }
+                .input-area { padding: 15px; background: #111; display: flex; gap: 10px; }
+                input { flex: 1; padding: 14px; background: #222; border: 2px solid #f00; color: #0f0; outline: none; border-radius: 6px; font-size: 16px; }
+                button { padding: 14px 28px; background: #f00; border: none; color: #000; font-weight: bold; cursor: pointer; border-radius: 6px; }
+                .user { color: #fff; text-align: right; margin: 15px 0; }
+                .bot { color: #0f0; margin: 18px 0; padding-left: 15px; border-left: 5px solid #f00; line-height: 1.6; }
             </style>
         </head>
         <body>
-            <h1>Talk with Vijay's clone 👺!!</h1>
+            <h1>Talk with Vijay's clone 👺!! (Wild Mode 🔥)</h1>
             <div id="chat-box">
-                <div class="bot"><b>Bot:</b> Enna da, stress-ah irukiya? Message pannu machi... full gaali + roast waiting for you 😂</div>
+                <div class="bot"><b>Bot:</b> Enna da punda... innum wild ah venuma? Full gaali + family roast waiting... message pannu thayoli! 😂🤣</div>
             </div>
             <div class="input-area">
-                <input type="text" id="userMsg" placeholder="Type here da punda..." onkeypress="if(event.key==='Enter') sendMsg()">
-                <button onclick="sendMsg()">SEND GAALI</button>
+                <input type="text" id="userMsg" placeholder="Type pannu da... enna venumna ketkalaam" onkeypress="if(event.key==='Enter') sendMsg()">
+                <button onclick="sendMsg()">SEND GAALI 🔥</button>
             </div>
 
             <script>
@@ -155,7 +128,7 @@ def home():
                         const data = await res.json();
                         box.innerHTML += `<div class="bot"><b>Bot:</b> ${data.bot}</div>`;
                     } catch (e) {
-                        box.innerHTML += `<div class="bot" style="color:red;"><b>Error:</b> Server oombidichi da!</div>`;
+                        box.innerHTML += `<div class="bot" style="color:red;"><b>Error:</b> Server oombidichi da punda!</div>`;
                     }
                     box.scrollTop = box.scrollHeight;
                 }
@@ -167,11 +140,11 @@ def home():
 
 @app.route("/chat", methods=['POST'])
 def chat():
-    data = request.get_json()
+    data = request.get_json(silent=True)
     user_msg = data.get('msg', '') if data else ''
     
-    if not user_msg:
-        return jsonify({"bot": "Enna da silent ah irukke? Type pannu loosu!"})
+    if not user_msg or len(user_msg.strip()) < 1:
+        return jsonify({"bot": "Enna da silent ah irukke? Gaali thooku da loosu! 🔥"})
     
     bot_res = chatbot.process_message(user_msg)
     return jsonify({"bot": bot_res})
