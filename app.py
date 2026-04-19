@@ -41,24 +41,57 @@ class VadaChennaiChatbot:
         return response
 
 chatbot = VadaChennaiChatbot()
-
-# --- Flask Routes ---
-
 @app.route("/")
 def home():
-    # Templates folder illama direct-a HTML render pandrom
     return """
     <html>
-        <head><title>Vada Chennai Bot</title></head>
-        <body style="background:#111; color:#0f0; font-family:sans-serif; text-align:center; padding-top:50px;">
-            <h1>🔥 GROK VADA CHENNAI LIVE 🔥</h1>
-            <p>Bot ready to roast your stress away!</p>
-            <div style="margin:20px; padding:20px; border:1px solid #333;">
-                <p>API Test: <code>/chat?msg=hi</code></p>
+        <head>
+            <title>Vada Chennai Bot</title>
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <style>
+                body { background: #000; color: #0f0; font-family: 'Courier New', Courier, monospace; display: flex; flex-direction: column; height: 100vh; margin: 0; }
+                #chat-box { flex: 1; overflow-y: auto; padding: 20px; border-bottom: 1px solid #333; }
+                .input-area { padding: 20px; display: flex; background: #111; position: sticky; bottom: 0; }
+                input { flex: 1; padding: 12px; background: #222; border: 1px solid #444; color: #0f0; outline: none; border-radius: 5px; font-size: 16px; }
+                button { padding: 10px 20px; background: #0f0; border: none; color: #000; font-weight: bold; cursor: pointer; margin-left: 10px; border-radius: 5px; }
+                .user { color: #fff; margin-bottom: 10px; padding: 5px; text-align: right; }
+                .bot { color: #0f0; margin-bottom: 20px; font-weight: bold; border-left: 3px solid #0f0; padding-left: 10px; line-height: 1.4; text-align: left; }
+            </style>
+        </head>
+        <body>
+            <h2 style="text-align:center; padding: 10px; border-bottom: 1px solid #333; margin:0;">🔥 GROK VADA CHENNAI 🔥</h2>
+            <div id="chat-box">
+                <div class="bot"><b>Bot:</b> Enna da punda, stress-ah irukiya? Message pannu, roast pannurendha! 😂🤣</div>
             </div>
+            <div class="input-area">
+                <input type="text" id="userMsg" placeholder="Type here..." onkeypress="if(event.key==='Enter') sendMsg()">
+                <button onclick="sendMsg()">SEND</button>
+            </div>
+            <script>
+                async function sendMsg() {
+                    const input = document.getElementById('userMsg');
+                    const box = document.getElementById('chat-box');
+                    const val = input.value.trim();
+                    if(!val) return;
+
+                    box.innerHTML += `<div class="user"><b>You:</b> ${val}</div>`;
+                    input.value = '';
+                    box.scrollTop = box.scrollHeight;
+                    
+                    try {
+                        const res = await fetch(`/chat?msg=${encodeURIComponent(val)}`);
+                        const data = await res.json();
+                        box.innerHTML += `<div class="bot"><b>Bot:</b> ${data.bot}</div>`;
+                    } catch (e) {
+                        box.innerHTML += `<div class="bot" style="color:red;"><b>Error:</b> Server oombidichi nanba!</div>`;
+                    }
+                    box.scrollTop = box.scrollHeight;
+                }
+            </script>
         </body>
     </html>
     """
+
 
 @app.route("/chat")
 def chat():
