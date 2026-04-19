@@ -8,11 +8,11 @@ app = Flask(__name__)
 # --- Vada Chennai Chatbot Logic ---
 class VadaChennaiChatbot:
     def __init__(self):
-        self.name = "GROK VADA CHENNAI"
+        self.name = "Talk with Vijay's clone 👺!!"
         self.openings = [
             "Aiyo da punda...", "Dei loosu thenga...", "Machi stress vanthutiya da...",
-            "Oombu da figure...", "Dei eruma maadu...", "Thevidiya payale...",
-            "Otha koothi...", "Mundhirikottai...", "Saavugrakki...", "Pooloombi..."
+            "Oombu da figure...", "Dei eruma maattu koothi.", "Thevidiya payale...",
+            "Otha koothi...", "kudhurakotta..", "Saavugrakki...", "Pooloombi..."
         ]
         self.gaalis = [
             "punda", "pundai", "sunni", "poolu", "oombu", "oombuda", "thenga", "thengada", 
@@ -20,9 +20,9 @@ class VadaChennaiChatbot:
             "baadu", "loosu", "maramandai", "eruma maadu", "porampokku", "mundhirikottai", 
             "dhandasoru", "moodevi", "saavugrakki", "gommaala", "thayoli", "mayiru"
         ]
-        self.body_roasts = ["walking godroom figure", "fridge with legs", "motte mappillai", "kozhai body", "dwarf king"]
-        self.skin_roasts = ["karuppu thambi", "karu karuppu", "coal piece", "midnight black", "kari mavan"]
-        self.regional_roasts = ["northie paithiyam", "mallu chaya kutty", "golti ladoo", "kanjadapandi"]
+        self.body_roasts = ["kutty kunjii", "thevdiya koothi", "poolumbi", "omaleyy deiii", "koothiyan"]
+        self.skin_roasts = ["tight pussy", "karuppu kunjii", "koo🔥", "otha pundaa", "thevdiya mavan"]
+        self.regional_roasts = ["punda paithiyam", "adingu un vaila yen poola vittu aata", "poi un appan poola sappu", "kanjakuduki"]
 
     def process_message(self, user_message: str) -> str:
         msg = user_message.lower()
@@ -30,9 +30,9 @@ class VadaChennaiChatbot:
         response += " ".join(random.sample(self.gaalis, 3)) + " "
         
         if "stress" in msg:
-            response += "unga amma pundaiya oombuna stressum poirum da punda 😂🤣"
+            response += "unga appa poola oombuna stressum poirum da punda 🤣"
         elif "sad" in msg or "depressed" in msg:
-            response += "thevidiya payale nee yaarukaga sad panra, un figure paathaale sad ah varum da 😂🤣"
+            response += "thevidiya payale nee yaarukaga sad panra, un figure paathaale erijal varum da 😂🤣"
         else:
             roast = random.choice([self.body_roasts, self.skin_roasts, self.regional_roasts])
             response += random.choice(roast) + " 😂🤣"
@@ -46,7 +46,7 @@ def home():
     return """
     <html>
         <head>
-            <title>Vada Chennai Bot</title>
+            <title>Talk with Vijay's clone 👺!!</title>
             <meta name="viewport" content="width=device-width, initial-scale=1">
             <style>
                 body { background: #000; color: #0f0; font-family: 'Courier New', Courier, monospace; display: flex; flex-direction: column; height: 100vh; margin: 0; }
@@ -59,9 +59,9 @@ def home():
             </style>
         </head>
         <body>
-            <h2 style="text-align:center; padding: 10px; border-bottom: 1px solid #333; margin:0;">🔥 GROK VADA CHENNAI 🔥</h2>
+            <h2 style="text-align:center; padding: 10px; border-bottom: 1px solid #333; margin:0; </h1> Talk with Vijay's clone 👺!!</h2>
             <div id="chat-box">
-                <div class="bot"><b>Bot:</b> Enna da punda, stress-ah irukiya? Message pannu, roast pannurendha! 😂🤣</div>
+                <div class="bot"><b>Bot:</b> Enna da, stress-ah irukiya? Message pannu, roast me nu mattum ketratha! 😂</div>
             </div>
             <div class="input-area">
                 <input type="text" id="userMsg" placeholder="Type here..." onkeypress="if(event.key==='Enter') sendMsg()">
